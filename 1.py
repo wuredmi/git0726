@@ -8,6 +8,9 @@ data = []
 print("Hello Python!!")
 print(f"今天日期{dt.datetime.today().strftime("%Y%m%d")}")
 
+#原始資料連結
+#https://api.cnyes.com/media/api/v1/newslist/category/headline?startAt=1751508401&endAt=1754100401&isIndexHeadline=0&isCategoryHeadline=0&limit=10
+
 #鉅亨網爬蟲程式
 url="https://api.cnyes.com/media/api/v1/newslist/category/headline"  #連結
 #payload= {"page":1,"limit":30,"startAt":1752645542,"endAt":1753509542}  #參數
@@ -34,7 +37,10 @@ df= pd.concat(data, ignore_index = True)  #取出新聞資料
 df= df[["newsId","title","summary"]]  #取出特定欄位
 
 df["link"]=df["newsId"].apply(lambda x: "https://m.cnyes.com/new/id/" + str(x))  #建立連結
-#df.to_csv("news.csv", encoding='utf-8-sig')
-#df.to_excel("news.xlsx")
+
+#輸出時，略過index
+df.to_csv("news.csv", encoding='utf-8-sig', index=False)
+df.to_excel("news.xlsx", index=False)
+
 print(df)
 
